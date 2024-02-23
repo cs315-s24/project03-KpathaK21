@@ -8,19 +8,17 @@ get_bitseq_signed_s:
     sd      ra, 8(sp)
     sd      s0, 0(sp)
 
+
     # Calculate len (end - start + 1)
-    sub    t0, a2, a1     # Subtract start from end
-    addi    t0, t0, 1       # Add 1 to get the length
+    sub     t0, a2, a1      # Subtract start from end
+    addi    t0, t0, 1        # Add 1 to get the length
 
     # Calculate shift amount (32 - len)
     li      t1, 32
-    sub     t2, t1, t0      # Calculate shift amount
+    sub     t2, t1, t0       # Calculate shift amount
 
     # Call get_bitseq_c
-    mv      a0, a0           # num
-    mv      a1, a1           # start
-    mv      a2, a2           # end
-    jal     ra, get_bitseq_s # Call get_bitseq_s
+    jal     ra, get_bitseq_s# Call get_bitseq_c
     mv      t3, a0           # Store the result in t3
 
 
@@ -39,7 +37,7 @@ is_negative:
     or      t3, t3, t4      # Perform sign extension by OR-ing with the extended mask
     sll     t3, t3, t2      # Shift left by shift amount
     mv      a0, t3          # Move the sign-extended value to a0
-
+   
 end_conversion:
     # Restore registers from the stack
     ld      ra, 8(sp)
